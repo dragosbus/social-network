@@ -17,13 +17,9 @@ def initialize():
             is_admin BOOLEAN NOT NULL)''')
 
 
-def add_user():
+def add_user(q):
     initialize()
-    cur.execute('''INSERT INTO users(username, email, password,
-        joined_at, is_admin) VALUES(%s, %s, %s, %s, %s)''',(
-            'dragosbus', 'dragosbus@gmail.com', '1234', datetime.datetime.now(), True))
+    cur.execute(q)
     con.commit()
     cur.close()
     con.close()
-
-add_user()
