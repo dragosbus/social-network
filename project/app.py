@@ -12,11 +12,14 @@ app.secret_key = 'some_secret'
 
 @app.route('/')
 def index():
-
+    user_session = None
     if 'user-email' in session:
-        return render_template('index.html',
-                                user=escape(session['user-email']),
-                                sess = True)
+        users = model.get_users()
+        for user in users:
+            if escape(session['user-email']) == user[2]:
+                user_session = user
+
+        return render_template('index.html', user=user_session, sess=True)
 
     return render_template('index.html', sess=False)
 
@@ -86,6 +89,7 @@ def register():
 def logout():
     session.pop('user-email', None)
     return redirect(url_for('index'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
