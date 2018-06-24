@@ -30,11 +30,13 @@ def register():
         users = model.get_users()
         error = None
         for user in users:
+            if user_username == user[1] and user_email == user[2]:
+                error = 'The username and email is already taken'
             if user_username == user[1]:
-                error = 'Username exist'
+                error = 'The username is already taken'
             if user_email == user[2]:
-                error = 'Email exist'
-            flash(error)
+                error = 'The email is already taken'
+            flash(error, 'error')
             return render_template('register.html')
 
         query = '''INSERT INTO users(username, email, password, joined_at, is_admin)
