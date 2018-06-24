@@ -46,7 +46,8 @@ def register():
         values = (user_username, user_email, user_pass, datetime.now(), False)
 
         model.add_user(query, values)
-
+        flash('Registred Successfuly!')
+        return redirect(url_for('index'))
 
     return render_template('register.html')
 

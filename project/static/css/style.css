@@ -131,6 +131,14 @@ button[disabled] {
   text-align: center;
 }
 
+.success-flash {
+  margin: 2rem auto;
+  width: 100%;
+  font-size: 1.75rem;
+  color: green;
+  text-align: center;
+}
+
 @media (min-width: 660px) {
   .form {
     width: 65%;
