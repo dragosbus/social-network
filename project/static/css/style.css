@@ -105,6 +105,12 @@ a {
   background: #3ac162;
 }
 
+button[disabled] {
+  background: #e6e6e6;
+  color: #222;
+  cursor: default;
+}
+
 @media (min-width: 660px) {
   .form {
     width: 65%;

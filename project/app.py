@@ -17,7 +17,7 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/register', methods=['GET','POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         user_username = request.form['username']
@@ -25,8 +25,6 @@ def register():
         user_pass = request.form['user-password']
         repeat_pass = request.form['repeat-password']
 
-        if user_username:
-            return 'Hello {}'.format(user_username)
     return render_template('register.html')
 
 
