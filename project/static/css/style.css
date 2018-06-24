@@ -15,3 +15,44 @@ html {
 body {
   font-family: 'Helvetica', sans-serif;
 }
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.main-header {
+  background: #2C3E4D;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 2rem;
+}
+
+.logo a,
+.navigation a {
+  color: #fff;
+}
+
+.navigation li {
+  display: inline-block;
+  margin: 0 2rem;
+}
+
+.navigation a{
+  font-size: 1.6rem;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 1.75rem;
+  margin-top: 1.5rem;
+  color: #fff;
+}

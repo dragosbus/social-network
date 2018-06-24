@@ -9,7 +9,15 @@
 </head>
 <body>
   <header class="main-header">
-    <h1>HEllo</h1>
+    <h1 class="logo">
+      <a href="{{url_for('index')}}">Home</a>
+    </h1>
+    <nav>
+      <ul class="navigation">
+        <li><a href="{{url_for('login')}}">Login</a></li>
+        <li><a href="{{url_for('register')}}">Register</a></li>
+      </ul>
+    </nav>
   </header>
   {% block content %}
   {% endblock %}
