@@ -11,7 +11,8 @@ app.secret_key = 'some_secret'
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    users = model.get_users()
+    return render_template('index.html', users=users)
 
 
 @app.route('/login')
@@ -36,8 +37,9 @@ def register():
                 error = 'The username is already taken'
             if user_email == user[2]:
                 error = 'The email is already taken'
-            flash(error, 'error')
-            return render_template('register.html')
+            if error:
+                flash(error)
+                return render_template('register.html')
 
         query = '''INSERT INTO users(username, email, password, joined_at, is_admin)
                    VALUES(%s, %s, %s, %s, %s)'''

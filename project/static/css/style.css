@@ -123,11 +123,12 @@ button[disabled] {
   display: none;
 }
 
-.error-flashes {
+.error-flash {
   margin: 2rem auto;
   width: 100%;
   font-size: 1.75rem;
   color: red;
+  text-align: center;
 }
 
 @media (min-width: 660px) {
