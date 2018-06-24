@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
   <h1 class="page-title">Register</h1>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li class="error-flashes">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
   <form class="form register" action="{{url_for('register')}}" method="post">
     <input id="username" type="text" name="username" placeholder="Username">
     <input id="user_email" type="email" name="user-email" placeholder="Email">

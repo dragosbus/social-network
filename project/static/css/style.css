@@ -123,6 +123,13 @@ button[disabled] {
   display: none;
 }
 
+.error-flashes {
+  margin: 2rem auto;
+  width: 100%;
+  font-size: 1.75rem;
+  color: red;
+}
+
 @media (min-width: 660px) {
   .form {
     width: 65%;

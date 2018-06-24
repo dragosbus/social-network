@@ -14,7 +14,7 @@ const App = (function() {
   }
 
   function formEventHandler(e) {
-    e.preventDefault();
+    // e.preventDefault();
     if (e.target.classList.contains('register'))
       registerHandler();
     }
@@ -56,13 +56,16 @@ const App = (function() {
   }
 
   function setModelProp(target, prop) {
-    if(target.id === prop) model[prop] = target.value
+    if (target.id === prop)
+      model[prop] = target.value
   }
 
   function setBorderColor(target) {
-    if(target.value) target.style.border = '2px solid #3ac162';
-    else target.style.border = '2px solid #f21541';
-  }
+    if (target.value)
+      target.style.border = '2px solid #3ac162';
+    else
+      target.style.border = '2px solid #f21541';
+    }
 
   return {init};
 

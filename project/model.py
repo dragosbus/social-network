@@ -17,9 +17,20 @@ def initialize():
             is_admin BOOLEAN NOT NULL)''')
 
 
-def add_user(q):
-    initialize()
-    cur.execute(q)
+def add_user(q, values):
+    con = psycopg2.connect(database='social')
+    cur = con.cursor()
+    cur.execute(q, values)
     con.commit()
     cur.close()
     con.close()
+
+def get_users():
+    con = psycopg2.connect(database='social')
+    cur = con.cursor()
+    cur.execute('''SELECT * FROM users''')
+    res = cur.fetchall();
+    cur.close()
+    con.close()
+
+    return res
