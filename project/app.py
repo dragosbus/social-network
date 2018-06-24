@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, url_for, request, redirect, render_template, flash
+from flask import Flask, url_for, request, redirect, render_template, flash, session, escape
 import model
 import psycopg2
 from datetime import datetime
@@ -9,14 +9,44 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = 'some_secret'
 
+
 @app.route('/')
 def index():
-    users = model.get_users()
-    return render_template('index.html', users=users)
+
+    if 'user-email' in session:
+        return render_template('index.html',
+                                user=escape(session['user-email']),
+                                sess = True)
+
+    return render_template('index.html', sess=False)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        user_email = request.form['user-email']
+        user_pass = request.form['user-password']
+
+        users = model.get_users()
+        user_session = None
+        error = None
+
+        for user in users:
+            if user_email == user[2]:
+                user_session = user
+
+        if user_session == None:
+            error = 'User not exist'
+        else:
+            if user_session[3] != user_pass:
+                error = 'Wrong Password'
+
+        if error:
+            flash(error)
+        else:
+            session['user-email'] = request.form['user-email']
+            return redirect(url_for('index'))
+
     return render_template('login.html')
 
 
@@ -46,11 +76,16 @@ def register():
         values = (user_username, user_email, user_pass, datetime.now(), False)
 
         model.add_user(query, values)
-        flash('Registred Successfuly!')
+        flash('Registered Successfuly!')
         return redirect(url_for('index'))
 
     return render_template('register.html')
 
+
+@app.route('/logout')
+def logout():
+    session.pop('user-email', None)
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)

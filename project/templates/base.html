@@ -13,10 +13,16 @@
       <a href="{{url_for('index')}}">Home</a>
     </h1>
     <nav>
-      <ul class="navigation">
-        <li><a href="{{url_for('login')}}">Login</a></li>
-        <li><a href="{{url_for('register')}}">Register</a></li>
-      </ul>
+      {% if sess %}
+        <ul class="navigation">
+          <li><a href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      {% else %}
+        <ul class="navigation">
+          <li><a href="{{url_for('login')}}">Login</a></li>
+          <li><a href="{{url_for('register')}}">Register</a></li>
+        </ul>
+      {% endif %}
     </nav>
   </header>
   {% block content %}

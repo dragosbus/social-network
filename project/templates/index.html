@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>hi</h2>
+  {% if sess %}
+    <h2>hi {{user}}</h2>
+  {% endif %}
   {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>
@@ -10,9 +12,4 @@
     </ul>
   {% endif %}
 {% endwith %}
-  <ul>
-    {% for user in users %}
-      <li>{{user[1]}}</li>
-    {% endfor %}
-  </ul>
 {% endblock %}
