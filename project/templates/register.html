@@ -3,9 +3,10 @@
   <h1 class="page-title">Register</h1>
   <form class="form register" action="{{url_for('register')}}" method="post">
     <input id="username" type="text" name="username" placeholder="Username">
-    <input id="user-email" type="email" name="user-email" placeholder="Email">
-    <input id="user-password" type="password" name="user-password" placeholder="Password">
-    <input id="repeat-password" type="password" name="repeat-password" placeholder="Repeat Password">
+    <input id="user_email" type="email" name="user-email" placeholder="Email">
+    <input id="user_password" type="password" name="user-password" placeholder="Password">
+    <input id="repeat_password" type="password" name="repeat-password" placeholder="Repeat Password">
+    <span class="not-match hide">Passwords are not match!</span>
     <button id="register-btn" type="submit" disabled>Register</button>
   </form>
 {% endblock %}

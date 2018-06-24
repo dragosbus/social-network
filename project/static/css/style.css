@@ -111,6 +111,18 @@ button[disabled] {
   cursor: default;
 }
 
+.not-match {
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
+  font-size: 1.7rem;
+  color: red;
+}
+
+.hide {
+  display: none;
+}
+
 @media (min-width: 660px) {
   .form {
     width: 65%;
