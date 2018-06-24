@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
   <h1 class="page-title">Sign In</h1>
+  <form class="form" action="{{url_for('login')}}" method="post">
+    <input type="email" name="user-email" placeholder="Email">
+    <input type="password" name="user-password" placeholder="Password">
+    <button type="submit">Register</button>
+  </form>
 {% endblock %}
