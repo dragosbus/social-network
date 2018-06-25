@@ -15,6 +15,7 @@
     <nav>
       {% if sess %}
         <ul class="navigation">
+          <li><a href="{{url_for('profile')}}">Profile</a></li>
           <li><a href="{{url_for('logout')}}">Logout</a></li>
         </ul>
       {% else %}

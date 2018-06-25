@@ -9,10 +9,13 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = 'some_secret'
 
+user_session = None
+
 
 @app.route('/')
 def index():
-    user_session = None
+    global user_session
+
     if 'user-email' in session:
         users = model.get_users()
         for user in users:
@@ -89,6 +92,13 @@ def register():
 def logout():
     session.pop('user-email', None)
     return redirect(url_for('index'))
+
+
+@app.route('/profile')
+def profile():
+    global user_session
+    
+    return render_template('profile.html', sess=True, user=user_session)
 
 
 if __name__ == '__main__':

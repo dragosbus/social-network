@@ -139,6 +139,16 @@ button[disabled] {
   text-align: center;
 }
 
+.profile-header {
+  padding: 1rem;
+  background: #fff;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(2,2,2,0.25);
+  margin-top: 3rem;
+}
+
 @media (min-width: 660px) {
   .form {
     width: 65%;
