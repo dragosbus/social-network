@@ -97,8 +97,8 @@ def logout():
 @app.route('/profile')
 def profile():
     global user_session
-    
-    return render_template('profile.html', sess=True, user=user_session)
+    date = str(user_session[4])[:11].replace('-', '/')
+    return render_template('profile.html', sess=True, user=user_session, date=date)
 
 
 if __name__ == '__main__':

@@ -147,6 +147,18 @@ button[disabled] {
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(2,2,2,0.25);
   margin-top: 3rem;
+  text-align: center;
+}
+
+.profile-header h2 {
+  margin-bottom: 1.5rem;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 2rem;
+}
+
+.profile-header h3 {
+  font-size: 1.6rem;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 @media (min-width: 660px) {
