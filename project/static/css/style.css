@@ -161,6 +161,10 @@ button[disabled] {
   color: rgba(0, 0, 0, 0.7);
 }
 
+.intro {
+  background: #2C3E4D;
+}
+
 @media (min-width: 660px) {
   .form {
     width: 65%;

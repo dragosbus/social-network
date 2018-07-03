@@ -2,6 +2,16 @@
 {% block content %}
   {% if sess %}
     <h2>hi {{user}}</h2>
+  {% else %}
+    <main>
+      <div class="intro">
+        <ul>
+          <li>Find new friends.</li>
+          <li>Hear what people are talking about.</li>
+          <li>Join the conversation.</li>
+        </ul>
+      </div>
+    </main>
   {% endif %}
   {% with messages = get_flashed_messages() %}
   {% if messages %}
