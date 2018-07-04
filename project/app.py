@@ -113,9 +113,14 @@ def find():
     return render_template('find.html')
 
 
-@app.route('/profile/edit')
+@app.route('/profile/edit', methods=['GET','POST'])
 def edit_profile():
     global user_session
+    if request.method == 'POST':
+        new_first_name = request.form['first_name']
+        new_last_name = request.form['last_name']
+        
+        return redirect(url_for('profile'))
     return render_template('edit.html', sess=True, user=user_session)
 
 
