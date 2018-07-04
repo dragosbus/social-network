@@ -176,6 +176,10 @@ button[disabled] {
   height: 3.5rem;
 }
 
+main {
+  padding-top: 8rem;
+}
+
 .intro {
   background: #2C3E4D;
   color: #fff;

@@ -113,5 +113,11 @@ def find():
     return render_template('find.html')
 
 
+@app.route('/profile/edit')
+def edit_profile():
+    global user_session
+    return render_template('edit.html', sess=True, user=user_session)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
