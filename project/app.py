@@ -122,7 +122,8 @@ def edit_profile():
         query = 'UPDATE users SET first_name=%s, last_name=%s WHERE username = %s'
         values = (new_first_name, new_last_name, user_session[1])
         model.update_user(query, values)
-        return redirect(url_for('profile'))
+        flash('Edited Successfuly!')
+        return redirect(url_for('index'))
     return render_template('edit.html', sess=True, user=user_session)
 
 
