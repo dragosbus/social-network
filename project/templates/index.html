@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
   {% if sess %}
-    <h2>hi {{user}}</h2>
+  <div class="content">
+    {{user}}
+  </div>
   {% else %}
     <main>
       <div class="intro">

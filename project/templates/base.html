@@ -20,7 +20,7 @@
           <li><a href="{{url_for('logout')}}">Logout</a></li>
         </ul>
         <form class="search" action="{{url_for('find')}}" method="post">
-          <input type="text" name="find_user">
+          <input type="text" name="find_user" placeholder="Search...">
         </form>
       {% else %}
         <ul class="navigation">
@@ -30,10 +30,8 @@
       {% endif %}
     </nav>
   </header>
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
+  {% block content %}
+  {% endblock %}
   <script src="{{url_for('static', filename='js/app.js')}}"></script>
 </body>
 </html>

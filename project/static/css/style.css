@@ -140,7 +140,8 @@ button[disabled] {
   text-align: center;
 }
 
-.profile-header {
+.profile-header,
+.profile {
   padding: 1rem;
   background: #fff;
   width: 90%;
@@ -174,9 +175,10 @@ button[disabled] {
   width: 100%;
   border: none;
   height: 3.5rem;
+  box-shadow: 0 2px 8px rgba(2,2,2,0.25);
 }
 
-main {
+.content {
   padding-top: 8rem;
 }
 
@@ -215,7 +217,8 @@ main {
   font-size: 1.6rem;
 }
 
-.sign a {
+.sign a,
+.edit-btn {
   display: block;
   text-align: center;
   margin: 4rem auto 0;
@@ -225,6 +228,12 @@ main {
   border-radius: 1.5rem;
   padding: 1rem 0;
   width: 50%;
+}
+
+.edit-btn {
+  width: 10rem;
+  font-size: 1.5rem;
+  padding: 0.7rem 0;
 }
 
 @media (min-width: 660px) {
