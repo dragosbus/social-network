@@ -101,5 +101,17 @@ def profile():
     return render_template('profile.html', sess=True, user=user_session, date=date)
 
 
+@app.route('/find', methods=['GET','POST'])
+def find():
+    if request.method == 'POST':
+        input_val = request.form['find_user']
+        query = '''SELECT username from users WHERE username
+            LIKE %s'''
+        values = ('{}%'.format(input_val), )
+        users = model.get_users(query, values)
+        return render_template('find.html',sess=True, users=users)
+    return render_template('find.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)

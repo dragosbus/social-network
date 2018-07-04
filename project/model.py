@@ -25,10 +25,10 @@ def add_user(q, values):
     cur.close()
     con.close()
 
-def get_users():
+def get_users(q='''SELECT * FROM users''', values=None):
     con = psycopg2.connect(database='social')
     cur = con.cursor()
-    cur.execute('''SELECT * FROM users''')
+    cur.execute(q, values)
     res = cur.fetchall();
     cur.close()
     con.close()

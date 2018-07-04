@@ -31,6 +31,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 5rem;
 }
 
 .logo {
@@ -159,6 +160,20 @@ button[disabled] {
 .profile-header h3 {
   font-size: 1.6rem;
   color: rgba(0, 0, 0, 0.7);
+}
+
+.search {
+  position: absolute;
+  top: 5rem;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.search input {
+  width: 100%;
+  border: none;
+  height: 3.5rem;
 }
 
 .intro {
