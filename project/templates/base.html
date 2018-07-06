@@ -19,9 +19,6 @@
           <li><a href="{{url_for('profile')}}">Profile</a></li>
           <li><a href="{{url_for('logout')}}">Logout</a></li>
         </ul>
-        <form class="search" action="{{url_for('find')}}" method="post">
-          <input type="text" name="find_user" placeholder="Search...">
-        </form>
       {% else %}
         <ul class="navigation">
           <li><a href="{{url_for('login')}}">Login</a></li>
@@ -29,6 +26,11 @@
         </ul>
       {% endif %}
     </nav>
+    {% if sess %}
+    <form class="search" action="{{url_for('find')}}" method="post">
+      <input type="text" name="find_user" placeholder="Search...">
+    </form>
+    {% endif %}
   </header>
   {% block content %}
   {% endblock %}

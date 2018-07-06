@@ -241,6 +241,35 @@ button[disabled] {
     width: 65%;
     margin: 0 auto;
   }
+
+  nav {
+    order: 2;
+  }
+
+  .search {
+    position: relative;
+    top: 0;
+    width: 40%;
+    order: 1;
+  }
+
+  .search input {
+    background: none;
+    color: #fff;
+    box-shadow: none;
+    border-bottom: 2px solid #fff;
+    outline: none;
+  }
+
+  .search input::placeholder {
+    transition: all 0.55s ease-in;
+  }
+
+  .search input:focus::placeholder {
+    top: -10px;
+  }
+
+
 }
 
 @media (min-width: 960px) {
