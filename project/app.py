@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, url_for, request, redirect, render_template, flash, session, escape
+from flask import Flask, url_for, request, redirect, render_template, flash, session, escape, jsonify
 import model
 import psycopg2
 from datetime import datetime
@@ -125,6 +125,32 @@ def edit_profile():
         flash('Edited Successfuly!')
         return redirect(url_for('index'))
     return render_template('edit.html', sess=True, user=user_session)
+
+
+@app.route('/', methods=['GET','POST'])
+def add_post():
+    global user_session
+    if request.method == 'POST':
+        value_post = request.form['new-post']
+        query = 'INSERT INTO posts(value, user_id) VALUES(%s, %s)'
+        values = (value_post, user_session[0])
+        model.add_user(query, values)
+        get_posts()
+    return render_template('index.html', sess=True, user=user_session)
+
+@app.route('/posts')
+def get_posts():
+    global user_session
+    if user_session:
+        datajs = []
+        query = 'SELECT value from posts WHERE user_id = %s'
+        values = (user_session[0], )
+        all_data = model.get_users(query, values)
+        for data in all_data:
+            datajs.append(data[0])
+        return jsonify({user_session[1]: datajs})
+    return 'Must be logged'
+
 
 
 if __name__ == '__main__':
