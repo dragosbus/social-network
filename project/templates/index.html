@@ -3,7 +3,7 @@
   {% if sess %}
   <div class="content">
     <form action="{{url_for('index')}}" method="POST" class="add-post-form">
-      <input type="text" name="new-post" placeholder="Type a post">
+      <textarea name="new-post"></textarea>
       <button type="submit">Add</button>
     </form>
     {{user}}
