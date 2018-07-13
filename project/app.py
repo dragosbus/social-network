@@ -145,28 +145,39 @@ def find():
 
 
 @app.route('/', methods=['GET', 'POST'])
+@is_logged_in
 def add_post():
-    global user_session
+    session_user_email = session['username']
+
+    query = 'SELECT * from users WHERE email = %s'
+    values = (session_user_email,)
+    user = model.get_users(query, values)
+
     if request.method == 'POST':
         value_post = request.form['new-post']
         query = 'INSERT INTO posts(value, user_id) VALUES(%s, %s)'
-        values = (value_post, user_session[0])
+        values = (value_post, user[0][0])
         model.add_user(query, values)
-    return render_template('index.html', sess=True, user=user_session)
+    return render_template('index.html')
 
 
 @app.route('/posts')
+@is_logged_in
 def get_posts():
-    global user_session
-    if user_session:
-        datajs = []
-        query = 'SELECT value from posts WHERE user_id = %s'
-        values = (user_session[0], )
-        all_data = model.get_users(query, values)
-        for data in all_data:
-            datajs.append(data[0])
-        return jsonify({user_session[1]: datajs})
-    return 'Must be logged'
+    session_user_email = session['username']
+
+    query = 'SELECT * from users WHERE email = %s'
+    values = (session_user_email,)
+    user = model.get_users(query, values)
+
+    query_posts = 'SELECT * from posts WHERE user_id = %s'
+    values = (user[0][0], )
+    posts = model.get_users(query_posts, values)
+
+    posts_js = {}
+    for post in posts:
+        posts_js[post[0]] = post[1]
+    return jsonify({'posts': posts_js})
 
 
 if __name__ == '__main__':
