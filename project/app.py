@@ -22,7 +22,7 @@ def login():
     if request.method == 'POST':
         user_email = request.form['user-email']
         user_pass = request.form['user-password']
-        #get user from db who match the input fields
+        # get user from db who match the input fields
         query = 'SELECT * FROM users WHERE email = %s'
         values = (user_email, )
         users = model.get_users(query, values)
@@ -78,7 +78,7 @@ def register():
     return render_template('register.html')
 
 
-#Check if user is logged is logged in
+# Check if user is logged is logged in
 def is_logged_in(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -107,25 +107,12 @@ def profile():
     user = model.get_users(query, values)
 
     date = str(user[0][4])
-    date = date[:11].replace('-','/')
+    date = date[:11].replace('-', '/')
 
     return render_template('profile.html', user=user[0], date=date)
 
 
-
-@app.route('/find', methods=['GET','POST'])
-def find():
-    if request.method == 'POST':
-        input_val = request.form['find_user']
-        query = '''SELECT username from users WHERE username
-            LIKE %s'''
-        values = ('{}%'.format(input_val), )
-        users = model.get_users(query, values)
-        return render_template('find.html')
-    return render_template('find.html')
-
-
-@app.route('/profile/edit', methods=['GET','POST'])
+@app.route('/profile/edit', methods=['GET', 'POST'])
 @is_logged_in
 def edit_profile():
     session_user_email = session['username']
@@ -143,7 +130,21 @@ def edit_profile():
     return render_template('edit.html')
 
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/find', methods=['GET', 'POST'])
+@is_logged_in
+def find():
+    if request.method == 'POST':
+        input_val = request.form['find_user']
+        query = '''SELECT username from users WHERE username
+            LIKE %s'''
+        values = ('{}%'.format(input_val), )
+        users = model.get_users(query, values)
+        print(users)
+        return render_template('find.html', users=users)
+    return render_template('find.html')
+
+
+@app.route('/', methods=['GET', 'POST'])
 def add_post():
     global user_session
     if request.method == 'POST':
@@ -152,6 +153,7 @@ def add_post():
         values = (value_post, user_session[0])
         model.add_user(query, values)
     return render_template('index.html', sess=True, user=user_session)
+
 
 @app.route('/posts')
 def get_posts():
@@ -165,7 +167,6 @@ def get_posts():
             datajs.append(data[0])
         return jsonify({user_session[1]: datajs})
     return 'Must be logged'
-
 
 
 if __name__ == '__main__':
