@@ -100,8 +100,17 @@ def logout():
 @app.route('/profile')
 @is_logged_in
 def profile():
-    user = session['username']
-    return render_template('profile.html', user=user)
+    session_user_email = session['username']
+
+    query = 'SELECT * from users WHERE email = %s'
+    values = (session_user_email,)
+    user = model.get_users(query, values)
+
+    username = user[0][1]
+    date = str(user[0][4])
+    date = date[:11].replace('-','/')
+
+    return render_template('profile.html', user=username, date=date)
 
 
 
