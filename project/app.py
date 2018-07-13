@@ -106,11 +106,10 @@ def profile():
     values = (session_user_email,)
     user = model.get_users(query, values)
 
-    username = user[0][1]
     date = str(user[0][4])
     date = date[:11].replace('-','/')
 
-    return render_template('profile.html', user=username, date=date)
+    return render_template('profile.html', user=user[0], date=date)
 
 
 
@@ -127,17 +126,21 @@ def find():
 
 
 @app.route('/profile/edit', methods=['GET','POST'])
+@is_logged_in
 def edit_profile():
-    global user_session
+    session_user_email = session['username']
+
     if request.method == 'POST':
         new_first_name = request.form['first_name']
         new_last_name = request.form['last_name']
-        query = 'UPDATE users SET first_name=%s, last_name=%s WHERE username = %s'
-        values = (new_first_name, new_last_name, user_session[1])
+
+        query = 'UPDATE users SET first_name=%s, last_name=%s WHERE email = %s'
+        values = (new_first_name, new_last_name, session_user_email)
         model.update_user(query, values)
+
         flash('Edited Successfuly!')
-        return redirect(url_for('index'))
-    return render_template('edit.html', sess=True, user=user_session)
+        return redirect(url_for('profile'))
+    return render_template('edit.html')
 
 
 @app.route('/', methods=['GET','POST'])
