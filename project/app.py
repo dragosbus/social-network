@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from flask import Flask, url_for, request, redirect, render_template, flash, jsonify
+from flask import Flask, url_for, request, redirect, render_template, flash, jsonify, session
 import model
 import psycopg2
+from functools import wraps
 
 from datetime import datetime
 
@@ -21,12 +22,26 @@ def login():
     if request.method == 'POST':
         user_email = request.form['user-email']
         user_pass = request.form['user-password']
-
-        query = 'SELECT * FROM users WHERE username = %s'
+        #get user from db who match the input fields
+        query = 'SELECT * FROM users WHERE email = %s'
         values = (user_email, )
         users = model.get_users(query, values)
 
-        print(users)
+        if len(users):
+            user_session_email = users[0][2]
+            user_session_pass = users[0][3]
+
+            if user_pass == user_session_pass:
+                session['logged_in'] = True
+                session['username'] = user_email
+                flash('Welcome {}'.format(users[0][1]))
+                return redirect(url_for('index'))
+            else:
+                flash('Incorrect password')
+                return render_template('login.html')
+        else:
+            flash("User not exist")
+            return render_template('login.html')
 
     return render_template('login.html')
 
@@ -63,16 +78,30 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/logout')
-def logout():
+#Check if user is logged is logged in
+def is_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Unauthorized, Log In')
+            return redirect(url_for('login'))
+    return wrap
 
+
+@app.route('/logout')
+@is_logged_in
+def logout():
+    session.clear()
     return redirect(url_for('index'))
 
 
 @app.route('/profile')
+@is_logged_in
 def profile():
-
-    date = str(user_session[4])[:11].replace('-', '/')
+    user = session['username']
+    return render_template('profile.html', user=user)
 
 
 
@@ -84,7 +113,7 @@ def find():
             LIKE %s'''
         values = ('{}%'.format(input_val), )
         users = model.get_users(query, values)
-        return render_template('find.html',sess=True, users=users)
+        return render_template('find.html')
     return render_template('find.html')
 
 

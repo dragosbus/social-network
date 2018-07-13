@@ -14,7 +14,7 @@
       <a href="{{url_for('index')}}">Home</a>
     </h1>
     <nav>
-      {% if sess %}
+      {% if session.logged_in %}
         <ul class="navigation">
           <li><a href="{{url_for('profile')}}">Profile</a></li>
           <li><a href="{{url_for('logout')}}">Logout</a></li>
@@ -26,7 +26,7 @@
         </ul>
       {% endif %}
     </nav>
-    {% if sess %}
+    {% if session.logged_in %}
     <form class="search" action="{{url_for('find')}}" method="post">
       <input type="text" name="find_user" placeholder="Search...">
     </form>

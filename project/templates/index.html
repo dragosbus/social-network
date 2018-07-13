@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-  {% if sess %}
+  {% if session.logged_in %}
   <div class="content">
     <form action="{{url_for('index')}}" method="POST" class="add-post-form">
       <textarea name="new-post"></textarea>
