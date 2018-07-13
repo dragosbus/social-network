@@ -4,6 +4,7 @@ from flask import Flask, url_for, request, redirect, render_template, flash, jso
 import model
 import psycopg2
 from functools import wraps
+import json
 
 from datetime import datetime
 
@@ -158,11 +159,12 @@ def add_post():
         query = 'INSERT INTO posts(value, user_id) VALUES(%s, %s)'
         values = (value_post, user[0][0])
         model.add_user(query, values)
-    return render_template('index.html')
+
+        posts = get_posts()
+
+    return render_template('index.html', posts=posts)
 
 
-@app.route('/posts')
-@is_logged_in
 def get_posts():
     session_user_email = session['username']
 
@@ -174,10 +176,7 @@ def get_posts():
     values = (user[0][0], )
     posts = model.get_users(query_posts, values)
 
-    posts_js = {}
-    for post in posts:
-        posts_js[post[0]] = post[1]
-    return jsonify({'posts': posts_js})
+    return posts
 
 
 if __name__ == '__main__':
