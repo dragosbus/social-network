@@ -1,30 +1,19 @@
 #!/usr/bin/env python3
 
-from flask import Flask, url_for, request, redirect, render_template, flash, session, escape, jsonify
+from flask import Flask, url_for, request, redirect, render_template, flash, jsonify
 import model
 import psycopg2
+
 from datetime import datetime
 
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
 
-user_session = None
-
 
 @app.route('/')
 def index():
-    global user_session
-
-    if 'user-email' in session:
-        users = model.get_users()
-        for user in users:
-            if escape(session['user-email']) == user[2]:
-                user_session = user
-
-        return render_template('index.html', user=user_session, sess=True)
-
-    return render_template('index.html', sess=False)
+    return render_template('index.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -33,25 +22,11 @@ def login():
         user_email = request.form['user-email']
         user_pass = request.form['user-password']
 
-        users = model.get_users()
-        user_session = None
-        error = None
+        query = 'SELECT * FROM users WHERE username = %s'
+        values = (user_email, )
+        users = model.get_users(query, values)
 
-        for user in users:
-            if user_email == user[2]:
-                user_session = user
-
-        if user_session == None:
-            error = 'User not exist'
-        else:
-            if user_session[3] != user_pass:
-                error = 'Wrong Password'
-
-        if error:
-            flash(error)
-        else:
-            session['user-email'] = request.form['user-email']
-            return redirect(url_for('index'))
+        print(users)
 
     return render_template('login.html')
 
@@ -90,15 +65,15 @@ def register():
 
 @app.route('/logout')
 def logout():
-    session.pop('user-email', None)
+
     return redirect(url_for('index'))
 
 
 @app.route('/profile')
 def profile():
-    global user_session
+
     date = str(user_session[4])[:11].replace('-', '/')
-    return render_template('profile.html', sess=True, user=user_session, date=date)
+
 
 
 @app.route('/find', methods=['GET','POST'])
@@ -135,7 +110,6 @@ def add_post():
         query = 'INSERT INTO posts(value, user_id) VALUES(%s, %s)'
         values = (value_post, user_session[0])
         model.add_user(query, values)
-        get_posts()
     return render_template('index.html', sess=True, user=user_session)
 
 @app.route('/posts')
